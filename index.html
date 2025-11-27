@@ -1,108 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TechPoov Notes</title>
+  <title>TechPoov Tools</title>
 
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f7f9fc;
-      margin: 40px;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
       color: #333;
     }
 
-    h1 {
+    header {
+      background: #2d6cdf;
+      padding: 30px 20px;
       text-align: center;
-      color: #222;
-      margin-bottom: 30px;
-      font-size: 28px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #ffffff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    th {
-      background-color: #2d6cdf;
       color: white;
-      text-align: left;
-      padding: 14px;
-      font-size: 16px;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    td {
-      padding: 14px;
-      line-height: 1.6;
-      border-bottom: 1px solid #eaeaea;
+    .container {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .tool-card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .tool-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2d6cdf;
+    }
+
+    .tool-desc {
       font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 12px;
     }
 
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover {
-      background-color: #f0f4ff;
-    }
-
-    a {
-      color: #1a73e8;
+    .tool-link {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #2d6cdf;
+      color: white;
       font-weight: bold;
-      margin-left: 8px;
       text-decoration: none;
+      border-radius: 6px;
+      transition: background .2s ease;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .tool-link:hover {
+      background: #1e4eb8;
     }
   </style>
-
 </head>
 
 <body>
 
-  <h1>Welcome to TechPoov's Notes</h1>
+<header>
+  TechPoov Tools
+</header>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Tool</th>
-        <th>Details</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>GDriveCrawlerToGSheet</td>
-        <td>
-          A simple Google Apps Script tool that scans your Google Drive and lists every folder and file into a clean, clickable Google Sheet.
-          <a href="https://github.com/TechPoov/GDriveCrawlerToGSheet" target="_blank">Go to page</a>
-        </td>
-      </tr>
+<div class="container">
 
-      <tr>
-        <td>WinFS_Inventory</td>
-        <td>
-          WinFS_InventoryCSV is a Windows utility that scans folders, files, or both, and generates clean CSV reports for inventory, audit, and documentation purposes.
-          The tool is fully automated using a configuration (.config) file—no pop-ups or user prompts.
-          <a href="https://github.com/TechPoov/WinFS_Inventory" target="_blank">Go to page</a>
-        </td>
-      </tr>
+  <div class="tool-card">
+    <div class="tool-title">GDriveCrawlerToGSheet</div>
+    <div class="tool-desc">
+      A Google Apps Script utility that scans your Google Drive and generates a clean, clickable Google Sheet containing every folder and file in the tree.
+    </div>
+    <a class="tool-link" href="https://github.com/TechPoov/GDriveCrawlerToGSheet" target="_blank">
+      View README & Download
+    </a>
+  </div>
 
-      <tr>
-        <td>GdriveFolderCopy</td>
-        <td>
-          Automated Google Drive folder replication tool with recursive copy support, progress persistence, detailed logging, duplicate avoidance, and trigger-based resume for large directory trees.
-          <a href="https://github.com/TechPoov/GdriveFolderCopy" target="_blank">Go to page</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="tool-card">
+    <div class="tool-title">WinFS_Inventory</div>
+    <div class="tool-desc">
+      A native Windows utility that inventories folders and files, generating CSV reports for audits, documentation, and automated file system analysis using a .config-driven workflow.
+    </div>
+    <a class="tool-link" href="https://github.com/TechPoov/WinFS_Inventory" target="_blank">
+      View README & Download
+    </a>
+  </div>
+
+  <div class="tool-card">
+    <div class="tool-title">GdriveFolderCopy</div>
+    <div class="tool-desc">
+      Automated Google Drive folder replication utility with recursive copy, resume capability, duplicate detection, logging, and long-run stability using Apps Script triggers.
+    </div>
+    <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy" target="_blank">
+      View README & Download
+    </a>
+  </div>
+
+</div>
 
 </body>
 </html>
