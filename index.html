@@ -15,13 +15,23 @@
 
     header {
       background: #2d6cdf;
-      padding: 35px 20px;
-      text-align: center;
+      padding: 20px 30px;
       color: white;
-      font-size: 34px;
       font-weight: 700;
       letter-spacing: .5px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      display: flex;              /* logo + title in a row */
+      align-items: center;        /* vertically center them */
+    }
+
+    .logo {
+      height: 48px;               /* adjust as you like */
+      width: auto;
+      margin-right: 14px;
+    }
+
+    .header-title {
+      font-size: 32px;
     }
 
     .container {
@@ -80,7 +90,8 @@
 <body>
 
 <header>
-  TechPoov Tools
+  <img src="img/tp_logo.png" alt="TechPoov logo" class="logo">
+  <div class="header-title">TechPoov Tools</div>
 </header>
 
 <div class="container">
@@ -107,18 +118,4 @@
     </a>
   </div>
 
-  <!-- CARD 3 -->
-  <div class="tool-card">
-    <div class="tool-title">GdriveFolderCopy</div>
-    <div class="tool-desc">
-      Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
-    </div>
-    <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy" target="_blank">
-      View README & Download
-    </a>
-  </div>
-
-</div>
-
-</body>
-</html>
+  <!--
