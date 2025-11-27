@@ -3,41 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <title>TechPoov Notes</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f7f9fc;
+      margin: 40px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th {
+      background-color: #2d6cdf;
+      color: white;
+      text-align: left;
+      padding: 14px;
+      font-size: 16px;
+    }
+
+    td {
+      padding: 14px;
+      line-height: 1.6;
+      border-bottom: 1px solid #eaeaea;
+      font-size: 15px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: #f0f4ff;
+    }
+
+    a {
+      color: #1a73e8;
+      font-weight: bold;
+      margin-left: 8px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
 </head>
+
 <body>
+
   <h1>Welcome to TechPoov's Notes</h1>
-<table border="1" cellpadding="6" cellspacing="0">
-  <thead>
-    <tr>
-      <th>Tool</th>
-      <th>Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>GDriveCrawlerToGSheet</td>
-      <td>
-        A simple Google Apps Script tool that scans your Google Drive and lists every folder and file into a clean, clickable Google Sheet.
-        <a https://github.com/TechPoov/GDriveCrawlerToGSheet target="_blank">Go to page</a>
-      </td>
-    </tr>
-    <tr>
-      <td>WinFS_Inventory</td>
-      <td>
-        WinFS_InventoryCSV is a Windows utility that scans folders, files, or both, and generates clean CSV reports for inventory, audit, and documentation purposes.
-        The tool is fully automated using a configuration (.config) file—no pop-ups or user prompts.
-        <a https://github.com/TechPoov/WinFS_Inventory target="_blank">Go to page</a>
-      </td>
-    </tr>
-    <tr>
-      <td>GdriveFolderCopy</td>
-      <td>
-        Automated Google Drive folder replication tool with recursive copy support, progress persistence, detailed logging, duplicate avoidance, and trigger-based resume for large directory trees.
-        <a https://github.com/TechPoov/GdriveFolderCopy target="_blank">Go to page</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GDriveCrawlerToGSheet</td>
+        <td>
+          A simple Google Apps Script tool that scans your Google Drive and lists every folder and file into a clean, clickable Google Sheet.
+          <a href="https://github.com/TechPoov/GDriveCrawlerToGSheet" target="_blank">Go to page</a>
+        </td>
+      </tr>
+
+      <tr>
+        <td>WinFS_Inventory</td>
+        <td>
+          WinFS_InventoryCSV is a Windows utility that scans folders, files, or both, and generates clean CSV reports for inventory, audit, and documentation purposes.
+          The tool is fully automated using a configuration (.config) file—no pop-ups or user prompts.
+          <a href="https://github.com/TechPoov/WinFS_Inventory" target="_blank">Go to page</a>
+        </td>
+      </tr>
+
+      <tr>
+        <td>GdriveFolderCopy</td>
+        <td>
+          Automated Google Drive folder replication tool with recursive copy support, progress persistence, detailed logging, duplicate avoidance, and trigger-based resume for large directory trees.
+          <a href="https://github.com/TechPoov/GdriveFolderCopy" target="_blank">Go to page</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 </body>
 </html>
