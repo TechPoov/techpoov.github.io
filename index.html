@@ -2,32 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TechPoov Tools – Header Comparison</title>
+  <title>TechPoov Tools</title>
 
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       background-color: #f5f7fa;
       margin: 0;
-      padding: 0 0 40px 0;
+      padding: 0;
       color: #333;
     }
 
-    .section-label {
-      background: #ddd;
-      padding: 10px 20px;
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 30px;
+    /* =============================================================
+       HEADER STYLE B — Subtitle on RIGHT SIDE
+       ============================================================= */
+    header {
+      background: #2d6cdf;
+      padding: 20px 30px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      letter-spacing: .5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* Common logo size */
+    .left-block {
+      display: flex;
+      align-items: center;
+    }
+
     .logo {
       height: 48px;
       width: auto;
+      margin-right: 14px;
     }
 
-    /* Card layout (your original styles) */
+    .header-title {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .right-block {
+      font-size: 15px;
+      opacity: 0.9;
+      text-align: right;
+      white-space: nowrap;   /* ⭐ keeps subtitle on ONE line */
+    }
+
+    /* =============================================================
+       CARD GRID 
+       ============================================================= */
     .container {
       max-width: 1100px;
       margin: 40px auto;
@@ -78,56 +104,28 @@
     .tool-link:hover {
       background: #1e4eb8;
     }
-    /* =============================================================
-       STYLE B — Subtitle on RIGHT side
-       ============================================================= */
-.header-B {
-  background: #2d6cdf;
-  padding: 20px 30px;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-.header-B .left-block {
-  display: flex;
-  align-items: center;
-}
-
-.header-B .header-title {
-  font-size: 32px;
-  font-weight: 700;
-  margin-left: 12px;
-}
-
-.header-B .right-block {
-  font-size: 15px;
-  opacity: 0.9;
-  text-align: right;
-  white-space: nowrap;  /* ⭐ keeps subtitle on ONE line */
-}
-
-
   </style>
 </head>
 
 <body>
 
-  <!-- STYLE B -->
-  <div class="section-label">Style B — Subtitle on Right Side</div>
-
-  <header class="header-B">
+  <!-- =============================================================
+       HEADER — OPTION B
+       ============================================================= -->
+  <header>
     <div class="left-block">
       <img src="img/tp_logo.png" alt="TechPoov logo" class="logo">
       <div class="header-title">TechPoov Tools</div>
     </div>
+
     <div class="right-block">
       Everyday IT Tools – Smart Tools for Busy People
     </div>
   </header>
 
+  <!-- =============================================================
+       TOOL CARDS
+       ============================================================= -->
   <div class="container">
 
     <!-- CARD 1 -->
