@@ -111,33 +111,34 @@
     /* =============================================================
        STYLE B — Subtitle on RIGHT side
        ============================================================= */
-    .header-B {
-      background: #2d6cdf;
-      padding: 20px 30px;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
+.header-B {
+  background: #2d6cdf;
+  padding: 20px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 
-    .header-B .left-block {
-      display: flex;
-      align-items: center;
-    }
+.header-B .left-block {
+  display: flex;
+  align-items: center;
+}
 
-    .header-B .header-title {
-      font-size: 32px;
-      font-weight: 700;
-      margin-left: 12px;
-    }
+.header-B .header-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-left: 12px;
+}
 
-    .header-B .right-block {
-      font-size: 15px;
-      opacity: 0.9;
-      text-align: right;
-      max-width: 320px;
-    }
+.header-B .right-block {
+  font-size: 15px;
+  opacity: 0.9;
+  text-align: right;
+  white-space: nowrap;  /* ⭐ keeps subtitle on ONE line */
+}
+
 
     /* =============================================================
        STYLE C — Centered layout
