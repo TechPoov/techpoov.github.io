@@ -2,38 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TechPoov Tools</title>
+  <title>TechPoov Tools – Header Comparison</title>
 
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       background-color: #f5f7fa;
       margin: 0;
-      padding: 0;
+      padding: 0 0 40px 0;
       color: #333;
     }
 
-    header {
-      background: #2d6cdf;
-      padding: 20px 30px;
-      color: white;
-      font-weight: 700;
-      letter-spacing: .5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
+    .section-label {
+      background: #ddd;
+      padding: 10px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 30px;
     }
 
+    /* Common logo size */
     .logo {
       height: 48px;
       width: auto;
-      margin-right: 14px;
     }
 
-    .header-title {
-      font-size: 32px;
-    }
-
+    /* Card layout (your original styles) */
     .container {
       max-width: 1100px;
       margin: 40px auto;
@@ -84,52 +78,171 @@
     .tool-link:hover {
       background: #1e4eb8;
     }
+
+    /* =============================================================
+       STYLE A — Subtitle UNDER main title
+       ============================================================= */
+    .header-A {
+      background: #2d6cdf;
+      padding: 20px 30px;
+      color: white;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .header-A .header-text {
+      display: flex;
+      flex-direction: column;
+      margin-left: 14px;
+    }
+
+    .header-A .header-title {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .header-A .header-subtitle {
+      font-size: 15px;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+
+    /* =============================================================
+       STYLE B — Subtitle on RIGHT side
+       ============================================================= */
+    .header-B {
+      background: #2d6cdf;
+      padding: 20px 30px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .header-B .left-block {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-B .header-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-left: 12px;
+    }
+
+    .header-B .right-block {
+      font-size: 15px;
+      opacity: 0.9;
+      text-align: right;
+      max-width: 320px;
+    }
+
+    /* =============================================================
+       STYLE C — Centered layout
+       ============================================================= */
+    .header-C {
+      background: #2d6cdf;
+      padding: 30px 20px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .header-C .logo-center {
+      height: 60px;
+      margin: 0 auto 10px auto;
+      display: block;
+    }
+
+    .header-C .header-title {
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .header-C .header-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-top: 6px;
+    }
   </style>
 </head>
 
 <body>
 
-<header>
-  <img src="img/tp_logo.png" alt="TechPoov logo" class="logo">
-  <div class="header-title">TechPoov Tools</div>
-</header>
+  <!-- STYLE A -->
+  <div class="section-label">Style A — Subtitle Under Main Title</div>
 
-<div class="container">
-
-  <!-- CARD 1 -->
-  <div class="tool-card">
-    <div class="tool-title">GDriveCrawlerToGSheet</div>
-    <div class="tool-desc">
-      Google Apps Script utility that scans your Google Drive and generates a clickable Google Sheet with full folder/file paths.
+  <header class="header-A">
+    <img src="img/tp_logo.png" alt="TechPoov logo" class="logo">
+    <div class="header-text">
+      <div class="header-title">TechPoov Tools</div>
+      <div class="header-subtitle">Everyday IT Tools – Smart Tools for Busy People</div>
     </div>
-    <a class="tool-link" href="https://github.com/TechPoov/GDriveCrawlerToGSheet" target="_blank">
-      View README & Download
-    </a>
-  </div>
+  </header>
 
-  <!-- CARD 2 -->
-  <div class="tool-card">
-    <div class="tool-title">WinFS_Inventory</div>
-    <div class="tool-desc">
-      A Windows utility that inventories folders and files, generating structured CSV reports for audits, documentation, and automation.
+  <!-- STYLE B -->
+  <div class="section-label">Style B — Subtitle on Right Side</div>
+
+  <header class="header-B">
+    <div class="left-block">
+      <img src="img/tp_logo.png" alt="TechPoov logo" class="logo">
+      <div class="header-title">TechPoov Tools</div>
     </div>
-    <a class="tool-link" href="https://github.com/TechPoov/WinFS_Inventory" target="_blank">
-      View README & Download
-    </a>
-  </div>
-
-  <!-- CARD 3 -->
-  <div class="tool-card">
-    <div class="tool-title">GdriveFolderCopy</div>
-    <div class="tool-desc">
-      Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
+    <div class="right-block">
+      Everyday IT Tools – Smart Tools for Busy People
     </div>
-    <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy" target="_blank">
-      View README & Download
-    </a>
-  </div>
+  </header>
 
-</div>
+  <!-- STYLE C -->
+  <div class="section-label">Style C — Centered Header</div>
+
+  <header class="header-C">
+    <img src="img/tp_logo.png" alt="TechPoov logo" class="logo-center">
+    <div class="header-title">TechPoov Tools</div>
+    <div class="header-subtitle">Everyday IT Tools – Smart Tools for Busy People</div>
+  </header>
+
+  <!-- CARD SECTION (your tools) -->
+  <div class="section-label">Card Section Preview (Same Cards, All Styles Above)</div>
+
+  <div class="container">
+
+    <!-- CARD 1 -->
+    <div class="tool-card">
+      <div class="tool-title">GDriveCrawlerToGSheet</div>
+      <div class="tool-desc">
+        Google Apps Script utility that scans your Google Drive and generates a clickable Google Sheet with full folder/file paths.
+      </div>
+      <a class="tool-link" href="https://github.com/TechPoov/GDriveCrawlerToGSheet" target="_blank">
+        View README & Download
+      </a>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="tool-card">
+      <div class="tool-title">WinFS_Inventory</div>
+      <div class="tool-desc">
+        A Windows utility that inventories folders and files, generating structured CSV reports for audits, documentation, and automation.
+      </div>
+      <a class="tool-link" href="https://github.com/TechPoov/WinFS_Inventory" target="_blank">
+        View README & Download
+      </a>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="tool-card">
+      <div class="tool-title">GdriveFolderCopy</div>
+      <div class="tool-desc">
+        Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
+      </div>
+      <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy" target="_blank">
+        View README & Download
+      </a>
+    </div>
+
+  </div>
 
 </body>
 </html>
