@@ -146,7 +146,7 @@
       margin-left: 260px;   /* 230px sidebar + ~30px gap */
     }
 
-    /* CARD GRID (original style) */
+    /* CARD GRID */
     .container {
       width: 100%;
       margin: 0;
@@ -161,6 +161,10 @@
       border-radius: 12px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
       transition: transform .15s ease, box-shadow .15s ease;
+
+      /* NEW: make content + footer layout work */
+      display: flex;
+      flex-direction: column;
     }
 
     .tool-card:hover {
@@ -173,6 +177,7 @@
       font-weight: 700;
       color: #2d6cdf;
       margin-bottom: 12px;
+      word-break: break-word;
     }
 
     .tool-desc {
@@ -180,32 +185,63 @@
       line-height: 1.6;
       margin-bottom: 15px;
       color: #444;
+      min-height: 48px;
     }
 
-    .tool-link {
-      display: inline-block;
-      padding: 10px 16px;
-      background: #2d6cdf;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background .2s ease;
+    /* NEW: footer row inside card */
+    .tool-footer {
+      margin-top: auto;               /* push footer to bottom */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 10px;
     }
+
+.tool-link {
+  display: inline-flex;
+  align-items: center;        /* vertically center text */
+  justify-content: center;
+  padding: 6px 14px;          /* reduced height to match badge */
+  background: #2d6cdf;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;            /* match badge font size */
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background .2s ease;
+  white-space: nowrap;
+  height: 28px;               /* FIXED HEIGHT MATCHES BADGE */
+  line-height: 1;
+}
+
 
     .tool-link:hover {
       background: #1e4eb8;
     }
 
-    /* CATEGORY HEADERS */
-    .category-title {
-      grid-column: 1 / -1;      /* full width across grid */
-      font-size: 22px;
-      font-weight: 700;
-      color: #2d6cdf;
-      margin: 10px 0 5px;
-      padding-left: 5px;
-      border-left: 5px solid #2d6cdf;
+    /* Download badge */
+    .download-badge {
+      display: inline-flex;
+      font-size: 12px;
+      border-radius: 4px;
+      overflow: hidden;
+      text-decoration: none;
+      margin-bottom: 0;      /* footer spacing handles layout */
+      height: 28px;    /* align with README button */
+    }
+
+    .download-badge .label {
+      background: #4b5563;   /* dark gray */
+      color: #f9fafb;
+      padding: 3px 8px;
+    }
+
+    .download-badge .count {
+      background: #fbbf24;   /* amber */
+      color: #111827;
+      padding: 3px 8px;
+      font-weight: 600;
     }
 
     /* README CONTENT STYLING */
@@ -273,7 +309,7 @@
         <span class="arrow" id="tools-arrow">▾</span>
       </button>
 
-      <!-- This will be filled automatically -->
+      <!-- Filled automatically -->
       <div id="tools-list"></div>
 
       <!-- INFO section -->
@@ -285,61 +321,9 @@
     <!-- CONTENT AREA -->
     <main id="content">
 
-      <!-- HOME VIEW: cards -->
+      <!-- HOME VIEW: cards (generated dynamically) -->
       <div id="home-view">
-        <div class="container">
-
-          <!-- CATEGORY HEADER 1 -->
-          <div class="category-title">For Google</div>
-
-          <!-- CARD 1 -->
-          <div class="tool-card">
-            <div class="tool-title">GDriveCrawlerToGSheet - to be removed</div>
-            <div class="tool-desc">
-              Google Apps Script utility that scans your Google Drive and generates a clickable Google Sheet with full folder/file paths.
-            </div>
-            <a class="tool-link" href="https://github.com/TechPoov/GDriveCrawlerToGSheet/releases" target="_blank">
-              View README & Download
-            </a>
-          </div>
-
-          <!-- CARD 2 -->
-          <div class="tool-card">
-            <div class="tool-title">GdriveFolderCopy</div>
-            <div class="tool-desc">
-              Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
-            </div>
-            <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy/releases" target="_blank">
-              View README & Download
-            </a>
-          </div>
-
-          <!-- CATEGORY HEADER 2 -->
-          <div class="category-title">For Windows</div>
-
-          <!-- CARD 3 -->
-          <div class="tool-card">
-            <div class="tool-title">WinFS_Inventory</div>
-            <div class="tool-desc">
-              A Windows utility that inventories folders and files, generating structured CSV reports for audits, documentation, and automation.
-            </div>
-            <a class="tool-link" href="https://github.com/TechPoov/WinFS_Inventory/releases" target="_blank">
-              View README & Download
-            </a>
-          </div>
-
-          <!-- CARD 4 -->
-          <div class="tool-card">
-            <div class="tool-title">Folder_File_Size_Analyzer</div>
-            <div class="tool-desc">
-              Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
-            </div>
-            <a class="tool-link" href="https://github.com/TechPoov/Folder_Size_Analyzer/releases" target="_blank">
-              View README & Download
-            </a>
-          </div>
-
-        </div>
+        <div id="cards-container" class="container"></div>
       </div>
 
       <!-- README VIEW -->
@@ -414,6 +398,85 @@
 
     const GITHUB_USER = "TechPoov";
 
+    // Build cards on the Home view from the repo list
+    function buildCards(toolRepos) {
+      const container = document.getElementById("cards-container");
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      toolRepos.forEach(repo => {
+        const card = document.createElement("div");
+        card.className = "tool-card";
+
+        const title = document.createElement("div");
+        title.className = "tool-title";
+        title.textContent = repo.name;
+
+        const desc = document.createElement("div");
+        desc.className = "tool-desc";
+        desc.textContent = repo.description || "No description provided yet.";
+
+        // Download badge
+        const badge = document.createElement("a");
+        badge.className = "download-badge";
+        badge.href = `https://github.com/${repo.full_name}/releases`;
+        badge.target = "_blank";
+        badge.innerHTML = `
+          <span class="label">downloads</span>
+          <span class="count">–</span>
+        `;
+        const countSpan = badge.querySelector(".count");
+        fetchDownloadCount(repo.full_name, countSpan);
+
+        // View README button
+        const link = document.createElement("a");
+        link.className = "tool-link";
+        link.href = `https://github.com/${repo.full_name}/releases`;
+        link.target = "_blank";
+        link.textContent = "README";
+
+        // Footer row (button left, badge right)
+        const footer = document.createElement("div");
+        footer.className = "tool-footer";
+        footer.appendChild(link);
+        footer.appendChild(badge);
+
+        card.appendChild(title);
+        card.appendChild(desc);
+        card.appendChild(footer);
+
+        container.appendChild(card);
+      });
+    }
+
+    // Fetch total download count from releases API
+    async function fetchDownloadCount(fullName, spanEl) {
+      try {
+        const resp = await fetch(`https://api.github.com/repos/${fullName}/releases?per_page=10`);
+        if (!resp.ok) {
+          throw new Error("GitHub releases API error " + resp.status);
+        }
+        const releases = await resp.json();
+
+        let total = 0;
+        releases.forEach(rel => {
+          if (Array.isArray(rel.assets)) {
+            rel.assets.forEach(asset => {
+              if (typeof asset.download_count === "number") {
+                total += asset.download_count;
+              }
+            });
+          }
+        });
+
+        spanEl.textContent = total.toString();
+      } catch (err) {
+        console.error(err);
+        spanEl.textContent = "?";  // fallback
+      }
+    }
+
     async function buildToolsList() {
       const list = document.getElementById("tools-list");
       list.innerHTML = '<div style="font-size:13px;color:#6b7280;">Loading tools…</div>';
@@ -427,18 +490,18 @@
         }
         const repos = await resp.json();
 
-        // Simple filter: public, not fork, not your pages repo
+        // Filter: public, not fork, not your pages repo
         const toolRepos = repos.filter(r =>
           !r.fork &&
           !r.archived &&
           r.name.toLowerCase() !== `${GITHUB_USER.toLowerCase()}.github.io`
         );
 
-        // Sort alphabetically
+        // Sort alphabetically (you can later replace with prefix ordering)
         toolRepos.sort((a, b) => a.name.localeCompare(b.name));
 
+        // Build sidebar
         list.innerHTML = "";
-
         toolRepos.forEach(repo => {
           const a = document.createElement("a");
           a.href = "#";
@@ -446,7 +509,6 @@
           a.classList.add("submenu-item");
           a.onclick = (e) => {
             e.preventDefault();
-            // Use default_branch reported by GitHub (main / master / etc.)
             loadREADME(repo.full_name, repo.default_branch);
           };
           list.appendChild(a);
@@ -455,6 +517,10 @@
         if (toolRepos.length === 0) {
           list.innerHTML = '<div style="font-size:13px;color:#6b7280;">No tools found yet.</div>';
         }
+
+        // Build cards on the home page
+        buildCards(toolRepos);
+
       } catch (err) {
         console.error(err);
         list.innerHTML =
@@ -473,7 +539,7 @@
     // Default state on load
     document.addEventListener("DOMContentLoaded", () => {
       showHome();                 // show cards
-      buildToolsList();           // auto-fill TOOLS from GitHub
+      buildToolsList();           // auto-fill TOOLS + cards from GitHub
       document.getElementById("tools-list").style.display = "block";
     });
   </script>
