@@ -49,11 +49,93 @@
       text-align: right;
     }
 
-    /* CARD GRID */
+    /* LAYOUT UNDER HEADER: SIDEBAR + CONTENT */
+    .main-wrapper {
+      /* full-width layout under header */
+      max-width: none;
+      margin: 30px 0 40px;
+      padding: 0 30px 40px; /* align with header padding */
+      display: flex;
+      gap: 20px;
+      box-sizing: border-box;
+    }
+
+    /* SIDEBAR */
+    #sidebar {
+      width: 230px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      padding: 16px 14px;
+      box-sizing: border-box;
+      align-self: flex-start;
+    }
+
+    #sidebar h2 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      color: #111827;
+    }
+
+    #sidebar h3 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #sidebar a {
+      display: block;
+      padding: 6px 4px;
+      font-size: 14px;
+      color: #1f2933;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    #sidebar a:hover {
+      background-color: #e5edff;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    /* Collapsible section header for TOOLS */
+    .sidebar-section-header {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: 14px 0 4px;
+      font-size: 14px;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .sidebar-section-header span.label {
+      pointer-events: none;
+    }
+
+    .sidebar-section-header span.arrow {
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    /* MAIN CONTENT AREA */
+    #content {
+      flex: 1;
+      box-sizing: border-box;
+    }
+
+    /* CARD GRID (original style) */
     .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
+      width: 100%;
+      margin: 0;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 25px;
@@ -111,6 +193,39 @@
       padding-left: 5px;
       border-left: 5px solid #2d6cdf;
     }
+
+    /* README CONTENT STYLING */
+    #readme-view {
+      background: #ffffff;
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    #readme-view h1, #readme-view h2, #readme-view h3 {
+      color: #111827;
+      margin-top: 1.2em;
+    }
+
+    #readme-view pre {
+      background: #f3f4f6;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    #readme-view code {
+      background: #f3f4f6;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    #readme-view a {
+      color: #1d4ed8;
+    }
   </style>
 </head>
 
@@ -128,60 +243,183 @@
     </div>
   </header>
 
-  <!-- TOOL AREA -->
-  <div class="container">
+  <!-- MAIN WRAPPER: SIDEBAR + CONTENT -->
+  <div class="main-wrapper">
 
-    <!-- CATEGORY HEADER 1 -->
-    <div class="category-title"> For Google</div>
+    <!-- SIDEBAR -->
+    <nav id="sidebar">
+      <h2>TechPoov Docs</h2>
 
-    <!-- CARD 1 -->
-    <div class="tool-card">
-      <div class="tool-title">GDriveCrawlerToGSheet</div>
-      <div class="tool-desc">
-        Google Apps Script utility that scans your Google Drive and generates a clickable Google Sheet with full folder/file paths.
+      <a href="#" onclick="showHome(); return false;">🏠 Home</a>
+
+      <!-- Collapsible TOOLS section -->
+      <button class="sidebar-section-header" onclick="toggleTools()">
+        <span class="label">TOOLS</span>
+        <span class="arrow" id="tools-arrow">▾</span>
+      </button>
+
+      <div id="tools-list">
+        <a href="#" onclick="loadREADME('TechPoov/GDriveCrawlerToGSheet'); return false;">
+          GDriveCrawlerToGSheet
+        </a>
+        <a href="#" onclick="loadREADME('TechPoov/GdriveFolderCopy'); return false;">
+          GdriveFolderCopy
+        </a>
+        <a href="#" onclick="loadREADME('TechPoov/WinFS_Inventory'); return false;">
+          WinFS_Inventory
+        </a>
+        <a href="#" onclick="loadREADME('TechPoov/Folder_Size_Analyzer'); return false;">
+          Folder_Size_Analyzer
+        </a>
       </div>
-      <a class="tool-link" href="https://github.com/TechPoov/GDriveCrawlerToGSheet/releases" target="_blank">
-        View README & Download
-      </a>
-    </div>
 
-    <!-- CARD 2 -->
-    <div class="tool-card">
-      <div class="tool-title">GdriveFolderCopy</div>
-      <div class="tool-desc">
-        Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
+      <h3>INFO</h3>
+      <a href="#" onclick="showAbout(); return false;">About TechPoov</a>
+      <a href="#" onclick="showContact(); return false;">Contact</a>
+    </nav>
+
+    <!-- CONTENT AREA -->
+    <main id="content">
+
+      <!-- HOME VIEW: cards -->
+      <div id="home-view">
+        <div class="container">
+
+          <!-- CATEGORY HEADER 1 -->
+          <div class="category-title">For Google</div>
+
+          <!-- CARD 1 -->
+          <div class="tool-card">
+            <div class="tool-title">GDriveCrawlerToGSheet - to be removed</div>
+            <div class="tool-desc">
+              Google Apps Script utility that scans your Google Drive and generates a clickable Google Sheet with full folder/file paths.
+            </div>
+            <a class="tool-link" href="https://github.com/TechPoov/GDriveCrawlerToGSheet/releases" target="_blank">
+              View README & Download
+            </a>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="tool-card">
+            <div class="tool-title">GdriveFolderCopy</div>
+            <div class="tool-desc">
+              Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
+            </div>
+            <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy/releases" target="_blank">
+              View README & Download
+            </a>
+          </div>
+
+          <!-- CATEGORY HEADER 2 -->
+          <div class="category-title">For Windows</div>
+
+          <!-- CARD 3 -->
+          <div class="tool-card">
+            <div class="tool-title">WinFS_Inventory</div>
+            <div class="tool-desc">
+              A Windows utility that inventories folders and files, generating structured CSV reports for audits, documentation, and automation.
+            </div>
+            <a class="tool-link" href="https://github.com/TechPoov/WinFS_Inventory/releases" target="_blank">
+              View README & Download
+            </a>
+          </div>
+
+          <!-- CARD 4 -->
+          <div class="tool-card">
+            <div class="tool-title">Folder_File_Size_Analyzer</div>
+            <div class="tool-desc">
+              Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
+            </div>
+            <a class="tool-link" href="https://github.com/TechPoov/Folder_Size_Analyzer/releases" target="_blank">
+              View README & Download
+            </a>
+          </div>
+
+        </div>
       </div>
-      <a class="tool-link" href="https://github.com/TechPoov/GdriveFolderCopy/releases" target="_blank">
-        View README & Download
-      </a>
-    </div>
 
-    <!-- CATEGORY HEADER 2 -->
-    <div class="category-title">For Windows</div>
+      <!-- README VIEW -->
+      <div id="readme-view" style="display:none;"></div>
 
-    <!-- CARD 3 -->
-    <div class="tool-card">
-      <div class="tool-title">WinFS_Inventory</div>
-      <div class="tool-desc">
-        A Windows utility that inventories folders and files, generating structured CSV reports for audits, documentation, and automation.
+      <!-- ABOUT VIEW -->
+      <div id="about-view" style="display:none;">
+        <h1>About TechPoov</h1>
+        <p>
+          TechPoov creates practical, no-nonsense utilities for busy people:
+          reliable tools, clear documentation, and repeatable workflows.
+        </p>
       </div>
-      <a class="tool-link" href="https://github.com/TechPoov/WinFS_Inventory/releases" target="_blank">
-        View README & Download
-      </a>
-    </div>
 
-    <!-- CARD 4 -->
-    <div class="tool-card">
-      <div class="tool-title">Folder_File_Size_Analyzer</div>
-      <div class="tool-desc">
-        Automated Google Drive folder replication with recursive copy, resume mode, duplicate-avoidance, and advanced logging.
+      <!-- CONTACT VIEW -->
+      <div id="contact-view" style="display:none;">
+        <h1>Contact</h1>
+        <p>Email: <a href="mailto:techpoov+support@gmail.com">techpoov+support@gmail.com</a></p>
       </div>
-      <a class="tool-link" href="https://github.com/TechPoov/Folder_Size_Analyzer/releases" target="_blank">
-        View README & Download
-      </a>
-    </div>
 
+    </main>
   </div>
+
+  <!-- MARKED.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    function showOnly(viewId) {
+      const views = ["home-view", "readme-view", "about-view", "contact-view"];
+      views.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = (id === viewId) ? "block" : "none";
+      });
+    }
+
+    function showHome() {
+      showOnly("home-view");
+    }
+
+    function showAbout() {
+      showOnly("about-view");
+    }
+
+    function showContact() {
+      showOnly("contact-view");
+    }
+
+    function loadREADME(repoPath) {
+      showOnly("readme-view");
+      const readmeDiv = document.getElementById("readme-view");
+      readmeDiv.innerHTML = "<p>Loading README.md from GitHub…</p>";
+
+      const rawURL = `https://raw.githubusercontent.com/${repoPath}/main/README.md`;
+
+      fetch(rawURL)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("GitHub returned " + response.status);
+          }
+          return response.text();
+        })
+        .then(md => {
+          readmeDiv.innerHTML = marked.parse(md);
+        })
+        .catch(err => {
+          console.error(err);
+          readmeDiv.innerHTML =
+            "<p>Unable to load README.md. Please check repository / branch name.</p>";
+        });
+    }
+
+    function toggleTools() {
+      const list = document.getElementById("tools-list");
+      const arrow = document.getElementById("tools-arrow");
+      const currentlyHidden = list.style.display === "none";
+      list.style.display = currentlyHidden ? "block" : "none";
+      arrow.textContent = currentlyHidden ? "▾" : "▸";
+    }
+
+    // Default state on load
+    showHome();                    // show cards
+    document.getElementById("tools-list").style.display = "block";  // Tools expanded
+  </script>
 
 </body>
 </html>
