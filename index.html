@@ -14,17 +14,25 @@
     }
 
     /* HEADER */
-    header {
-      background: #2d6cdf;
-      padding: 20px 30px;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-      letter-spacing: .5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
+header {
+  background: #2d6cdf;
+  padding: 20px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  letter-spacing: .5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+  /* NEW: keep header always visible */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
 
     .left-block {
       display: flex;
@@ -50,26 +58,33 @@
     }
 
     /* LAYOUT UNDER HEADER: SIDEBAR + CONTENT */
-    .main-wrapper {
-      /* full-width layout under header */
-      max-width: none;
-      margin: 30px 0 40px;
-      padding: 0 30px 40px; /* align with header padding */
-      display: flex;
-      gap: 20px;
-      box-sizing: border-box;
-    }
+.main-wrapper {
+  /* header is ~110px tall; push content below it */
+  max-width: none;
+  margin: 110px 30px 40px 30px;
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
 
     /* SIDEBAR */
-    #sidebar {
-      width: 230px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      padding: 16px 14px;
-      box-sizing: border-box;
-      align-self: flex-start;
-    }
+#sidebar {
+  position: fixed;
+  top: 110px;             /* same as .main-wrapper top margin */
+  left: 30px;             /* same as page side padding */
+  width: 230px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  padding: 16px 14px;
+  box-sizing: border-box;
+
+  /* NEW: full-height sidebar, scrolls inside if too long */
+  height: calc(100vh - 110px - 40px);  /* viewport minus header & bottom margin */
+  overflow-y: auto;
+}
+
 
     #sidebar h2 {
       font-size: 18px;
@@ -127,10 +142,11 @@
     }
 
     /* MAIN CONTENT AREA */
-    #content {
-      flex: 1;
-      box-sizing: border-box;
-    }
+#content {
+  box-sizing: border-box;
+  margin-left: 260px;   /* 230px sidebar + ~30px gap */
+}
+
 
     /* CARD GRID (original style) */
     .container {
@@ -253,25 +269,14 @@
       <a href="#" onclick="showHome(); return false;">🏠 Home</a>
 
       <!-- Collapsible TOOLS section -->
-      <button class="sidebar-section-header" onclick="toggleTools()">
-        <span class="label">TOOLS</span>
-        <span class="arrow" id="tools-arrow">▾</span>
-      </button>
+<!-- Collapsible TOOLS section -->
+<button class="sidebar-section-header" onclick="toggleTools()">
+  <span class="label">TOOLS</span>
+  <span class="arrow" id="tools-arrow">▾</span>
+</button>
 
-      <div id="tools-list">
-        <a href="#" onclick="loadREADME('TechPoov/GDriveCrawlerToGSheet'); return false;">
-          GDriveCrawlerToGSheet
-        </a>
-        <a href="#" onclick="loadREADME('TechPoov/GdriveFolderCopy'); return false;">
-          GdriveFolderCopy
-        </a>
-        <a href="#" onclick="loadREADME('TechPoov/WinFS_Inventory'); return false;">
-          WinFS_Inventory
-        </a>
-        <a href="#" onclick="loadREADME('TechPoov/Folder_Size_Analyzer'); return false;">
-          Folder_Size_Analyzer
-        </a>
-      </div>
+<!-- This will be filled automatically -->
+<div id="tools-list"></div>
 
       <h3>INFO</h3>
       <a href="#" onclick="showAbout(); return false;">About TechPoov</a>
@@ -384,42 +389,96 @@
       showOnly("contact-view");
     }
 
-    function loadREADME(repoPath) {
-      showOnly("readme-view");
-      const readmeDiv = document.getElementById("readme-view");
-      readmeDiv.innerHTML = "<p>Loading README.md from GitHub…</p>";
+function loadREADME(repoPath, branchName = "main") {
+  showOnly("readme-view");
+  const readmeDiv = document.getElementById("readme-view");
+  readmeDiv.innerHTML = "<p>Loading README.md from GitHub…</p>";
 
-      const rawURL = `https://raw.githubusercontent.com/${repoPath}/main/README.md`;
+  // Build correct URL depending on branch
+  const rawURL = `https://raw.githubusercontent.com/${repoPath}/${branchName}/README.md`;
 
-      fetch(rawURL)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("GitHub returned " + response.status);
-          }
-          return response.text();
-        })
-        .then(md => {
-          readmeDiv.innerHTML = marked.parse(md);
-        })
-        .catch(err => {
-          console.error(err);
-          readmeDiv.innerHTML =
-            "<p>Unable to load README.md. Please check repository / branch name.</p>";
-        });
+  fetch(rawURL)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("GitHub returned " + response.status);
+      }
+      return response.text();
+    })
+    .then(md => {
+      readmeDiv.innerHTML = marked.parse(md);
+    })
+    .catch(err => {
+      console.error(err);
+      readmeDiv.innerHTML =
+        "<p>Unable to load README.md. Please check repository / branch name.</p>";
+    });
+}
+
+  const GITHUB_USER = "TechPoov";
+
+  async function buildToolsList() {
+    const list = document.getElementById("tools-list");
+    list.innerHTML = '<div style="font-size:13px;color:#6b7280;">Loading tools…</div>';
+
+    try {
+      const resp = await fetch(
+        `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`
+      );
+      if (!resp.ok) {
+        throw new Error("GitHub API error " + resp.status);
+      }
+      const repos = await resp.json();
+
+      // Simple filter: public, not fork, not your pages repo
+      const toolRepos = repos.filter(r =>
+        !r.fork &&
+        !r.archived &&
+        r.name.toLowerCase() !== `${GITHUB_USER.toLowerCase()}.github.io`
+      );
+
+      // Optional: sort alphabetically
+      toolRepos.sort((a, b) => a.name.localeCompare(b.name));
+
+      list.innerHTML = "";
+
+      toolRepos.forEach(repo => {
+        const a = document.createElement("a");
+        a.href = "#";
+        a.textContent = repo.name;
+        a.onclick = (e) => {
+          e.preventDefault();
+          // Use default_branch reported by GitHub (main / master / etc.)
+          loadREADME(repo.full_name, repo.default_branch);
+        };
+        list.appendChild(a);
+      });
+
+      if (toolRepos.length === 0) {
+        list.innerHTML = '<div style="font-size:13px;color:#6b7280;">No tools found yet.</div>';
+      }
+    } catch (err) {
+      console.error(err);
+      list.innerHTML =
+        '<div style="font-size:13px;color:#b91c1c;">Error loading tools list.</div>';
     }
+  }
 
-    function toggleTools() {
-      const list = document.getElementById("tools-list");
-      const arrow = document.getElementById("tools-arrow");
-      const currentlyHidden = list.style.display === "none";
-      list.style.display = currentlyHidden ? "block" : "none";
-      arrow.textContent = currentlyHidden ? "▾" : "▸";
-    }
+  function toggleTools() {
+    const list = document.getElementById("tools-list");
+    const arrow = document.getElementById("tools-arrow");
+    const currentlyHidden = list.style.display === "none";
+    list.style.display = currentlyHidden ? "block" : "none";
+    arrow.textContent = currentlyHidden ? "▾" : "▸";
+  }
 
-    // Default state on load
-    showHome();                    // show cards
-    document.getElementById("tools-list").style.display = "block";  // Tools expanded
-  </script>
+  // Default state on load
+  document.addEventListener("DOMContentLoaded", () => {
+    showHome();                 // show cards
+    buildToolsList();           // auto-fill TOOLS from GitHub
+    document.getElementById("tools-list").style.display = "block";
+  });
+</script>
+
 
 </body>
 </html>
