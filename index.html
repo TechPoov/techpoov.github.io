@@ -155,7 +155,10 @@
       padding: 22px;
       border-radius: 12px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      transition: transform .15s ease, box-shadow .15s ease;
+
+      /* NEW HOVER BORDER SUPPORT */
+      border: 2px solid transparent;
+      transition: transform .15s ease, box-shadow .15s ease, border .2s ease;
 
       display: flex;
       flex-direction: column;
@@ -164,6 +167,9 @@
     .tool-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+      /* NEW: BLUE BORDER ON HOVER */
+      border-color: #2d6cdf;
     }
 
     .tool-title {
@@ -379,13 +385,11 @@
 
     const GITHUB_USER = "TechPoov";
 
-    // Read prefix like 01_, 02_, 10_ from repo name
     function getPrefixNumber(name) {
       const m = name.match(/^(\d+)_/);
       return m ? parseInt(m[1], 10) : null;
     }
 
-    // Strip numeric prefix from display name
     function cleanRepoName(name) {
       return name.replace(/^\d+_/, "");
     }
@@ -515,7 +519,8 @@
         });
 
         if (toolRepos.length === 0) {
-          list.innerHTML = '<div style="font-size:13px;color:#6b7280;">No tools found yet.</div>';
+          list.innerHTML =
+            '<div style="font-size:13px;color:#6b7280;">No tools found yet.</div>';
         }
 
         buildCards(toolRepos);
