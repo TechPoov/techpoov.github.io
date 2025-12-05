@@ -165,19 +165,20 @@
       border-radius: 12px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 
-      /* NEW HOVER BORDER SUPPORT */
+      /* HOVER BORDER SUPPORT */
       border: 2px solid transparent;
       transition: transform .15s ease, box-shadow .15s ease, border .2s ease;
 
       display: flex;
       flex-direction: column;
+      cursor: pointer; /* card looks clickable */
     }
 
     .tool-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 
-      /* NEW: BLUE BORDER ON HOVER */
+      /* BLUE BORDER ON HOVER */
       border-color: #2d6cdf;
     }
 
@@ -403,6 +404,8 @@
     }
 
     const GITHUB_USER = "TechPoov";
+    // Map repo full_name -> sidebar <a> element
+    const sidebarLinkMap = {};
 
     function getPrefixNumber(name) {
       const m = name.match(/^(\d+)_/);
@@ -428,7 +431,7 @@
         title.textContent = cleanRepoName(repo.name);
 
         const desc = document.createElement("div");
-          desc.className = "tool-desc";
+        desc.className = "tool-desc";
         desc.textContent = repo.description || "No description provided yet.";
 
         const badge = document.createElement("a");
@@ -446,9 +449,26 @@
         link.className = "tool-link";
         link.href = "#";
         link.textContent = "README";
+
+        // Shared behavior for card + button
+        const openTool = () => {
+          const sidebarItem = sidebarLinkMap[repo.full_name];
+          if (sidebarItem) {
+            setActiveSidebarItem(sidebarItem);
+          }
+          loadREADME(repo.full_name, repo.default_branch);
+        };
+
+        // Click entire card
+        card.onclick = () => {
+          openTool();
+        };
+
+        // Click README button (prevent double triggering card)
         link.onclick = (e) => {
           e.preventDefault();
-          loadREADME(repo.full_name, repo.default_branch);
+          e.stopPropagation();
+          openTool();
         };
 
         const footer = document.createElement("div");
@@ -530,6 +550,10 @@
           a.href = "#";
           a.textContent = cleanRepoName(repo.name);
           a.classList.add("submenu-item");
+
+          // store mapping so cards can find this sidebar item
+          sidebarLinkMap[repo.full_name] = a;
+
           a.onclick = (e) => {
             e.preventDefault();
             setActiveSidebarItem(a);
