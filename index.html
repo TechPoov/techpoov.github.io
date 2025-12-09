@@ -329,12 +329,20 @@
 
       <div id="readme-view" style="display:none;"></div>
 
+      <!-- ABOUT VIEW NOW LOADS FROM pages/AboutTechPoov.html -->
       <div id="about-view" style="display:none;">
-        <h1>About TechPoov</h1>
-        <p>
-          TechPoov creates practical, no-nonsense utilities for busy people:
-          reliable tools, clear documentation, and repeatable workflows.
-        </p>
+        <iframe
+          src="pages/AboutTechPoov.html"
+          title="About TechPoov"
+          style="
+            width: 100%;
+            height: calc(100vh - 160px);
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            background: #ffffff;
+          "
+        ></iframe>
       </div>
 
       <div id="contact-view" style="display:none;">
@@ -435,10 +443,10 @@
         desc.textContent = repo.description || "No description provided yet.";
 
         const badge = document.createElement("a");
-        badge.className = "download-badge";
-        badge.href = `https://github.com/${repo.full_name}/releases`;
-        badge.target = "_blank";
-        badge.innerHTML = `
+          badge.className = "download-badge";
+          badge.href = `https://github.com/${repo.full_name}/releases`;
+          badge.target = "_blank";
+          badge.innerHTML = `
           <span class="label">downloads</span>
           <span class="count">–</span>
         `;
