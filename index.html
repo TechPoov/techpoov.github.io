@@ -1,607 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TechPoov Tools</title>
+  <meta charset="UTF-8" />
+  <title>TechPoov Tools – Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="css/site.css">
+
+  <script src="js/sidebar-tools.js"></script>
+
+  <!-- Page-specific styles -->
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f5f7fa;
-      margin: 0;
-      padding: 0;
-      color: #333;
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
     }
 
-    /* HEADER */
-    header {
-      background: #2d6cdf;
-      padding: 20px 30px;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-      letter-spacing: .5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-    }
-
-    .left-block {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo {
-      height: 48px;
-      width: auto;
-      margin-right: 14px;
-    }
-
-    .header-title {
-      font-size: 32px;
-      font-weight: 700;
-    }
-
-    .right-block {
-      font-size: 15px;
-      opacity: 0.9;
-      white-space: nowrap;
-      text-align: right;
-    }
-
-    /* LAYOUT UNDER HEADER: SIDEBAR + CONTENT */
-    .main-wrapper {
-      max-width: none;
-      margin: 110px 30px 40px 30px;
-      padding: 0;
-      display: block;
-      box-sizing: border-box;
-    }
-
-    /* SIDEBAR */
-    #sidebar {
-      position: fixed;
-      top: 110px;
-      left: 30px;
-      width: 230px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      padding: 16px 14px;
-      box-sizing: border-box;
-
-      height: calc(100vh - 110px - 40px);
-      overflow-y: auto;
-    }
-
-    #sidebar h3 {
-      font-size: 14px;
-      margin: 14px 0 6px;
-      color: #374151;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-weight: 600;
-    }
-
-    #sidebar a {
-      display: block;
-      padding: 6px 4px;
-      font-size: 14px;
-      color: #1f2933;
-      text-decoration: none;
-      border-radius: 4px;
-    }
-
-    #sidebar a:hover {
-      background-color: #e5edff;
-      color: #1e40af;
-      font-weight: 600;
-    }
-
-    /* ACTIVE SIDEBAR ITEM */
-    #sidebar a.active {
-      background-color: #e5edff;
-      color: #1e40af;
-      font-weight: 600;
-      border-left: 4px solid #2d6cdf;
-      padding-left: 12px;
-    }
-
-    .sidebar-section-header {
-      width: 100%;
-      border: none;
-      background: transparent;
-      padding: 0;
-      margin: 14px 0 4px;
-      font-size: 14px;
-      color: #374151;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .sidebar-section-header span.label {
-      pointer-events: none;
-      font-weight: 600;
-    }
-
-    .sidebar-section-header span.arrow {
-      font-size: 12px;
-      pointer-events: none;
-    }
-
-    #sidebar .submenu-item {
-      padding-left: 18px;
-      display: block;
-    }
-
-    /* MAIN CONTENT AREA */
-    #content {
-      box-sizing: border-box;
-      margin-left: 260px;
-    }
-
-    /* CARD GRID */
-    .container {
-      width: 100%;
-      margin: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 25px;
-    }
-
-    .tool-card {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-
-      /* HOVER BORDER SUPPORT */
-      border: 2px solid transparent;
-      transition: transform .15s ease, box-shadow .15s ease, border .2s ease;
-
-      display: flex;
-      flex-direction: column;
-      cursor: pointer; /* card looks clickable */
-    }
-
-    .tool-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-
-      /* BLUE BORDER ON HOVER */
-      border-color: #2d6cdf;
-    }
-
-    .tool-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #2d6cdf;
-      margin-bottom: 12px;
-      word-break: break-word;
-    }
-
-    .tool-desc {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 15px;
-      color: #444;
-      min-height: 48px;
-    }
-
-    .tool-footer {
-      margin-top: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding-top: 10px;
-    }
-
-    .tool-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 14px;
-      background: #2d6cdf;
-      color: white;
-      font-weight: 700;
-      font-size: 14px;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background .2s ease;
-      white-space: nowrap;
-      height: 28px;
-      line-height: 1;
-    }
-
-    .tool-link:hover {
-      background: #1e4eb8;
-    }
-
-    .download-badge {
-      display: inline-flex;
-      font-size: 12px;
-      border-radius: 4px;
-      overflow: hidden;
-      text-decoration: none;
-      height: 28px;
-    }
-
-    .download-badge .label {
-      background: #4b5563;
-      color: #f9fafb;
-      padding: 3px 8px;
-    }
-
-    .download-badge .count {
-      background: #fbbf24;
-      color: #111827;
-      padding: 3px 8px;
-      font-weight: 600;
-    }
-
-    #readme-view {
-      background: #ffffff;
-      padding: 20px 24px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    #readme-view h1, #readme-view h2, #readme-view h3 {
-      color: #111827;
-      margin-top: 1.2em;
-    }
-
-    #readme-view pre {
-      background: #f3f4f6;
-      padding: 10px;
-      border-radius: 6px;
-      overflow-x: auto;
-    }
-
-    #readme-view code {
-      background: #f3f4f6;
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-size: 13px;
-    }
-
-    #readme-view a {
-      color: #1d4ed8;
+    .card h2 {
+      margin-top: 0;
+      font-size: 18px;
     }
   </style>
 </head>
 
-<body>
-
+<body data-page="home">
   <!-- HEADER -->
-  <header>
-    <div class="left-block">
-      <img src="img/tp_logo.png" alt="TechPoov logo" class="logo">
-      <div class="header-title">TechPoov Tools</div>
-    </div>
+  <div id="tp-header-container"></div>
 
-    <div class="right-block">
-      Everyday IT Tools – Smart Tools for Busy People
-    </div>
-  </header>
-
-  <!-- MAIN WRAPPER: SIDEBAR + CONTENT -->
+  <!-- MAIN WRAPPER -->
   <div class="main-wrapper">
+    <div class="layout">
 
-    <!-- SIDEBAR -->
-    <nav id="sidebar">
+      <!-- SIDEBAR -->
+      <div id="sidebar-container"></div>
 
-      <a href="#" id="nav-home" onclick="setActiveSidebarItem(this); showHome(); return false;" style="font-weight:600;">
-        🏠 Home
-      </a>
-
-      <button class="sidebar-section-header" onclick="toggleTools()">
-        <span class="label">TOOLS</span>
-        <span class="arrow" id="tools-arrow">▾</span>
-      </button>
-
-      <div id="tools-list"></div>
-
-      <h3>INFO</h3>
-      <a href="#" class="submenu-item" onclick="setActiveSidebarItem(this); showAbout(); return false;">About TechPoov</a>
-      <a href="#" class="submenu-item" onclick="setActiveSidebarItem(this); showContact(); return false;">Contact</a>
-    </nav>
-
-    <!-- CONTENT AREA -->
-    <main id="content">
-
-      <div id="home-view">
-        <div id="cards-container" class="container"></div>
-      </div>
-
-      <div id="readme-view" style="display:none;"></div>
-
-      <!-- ABOUT VIEW NOW LOADS FROM pages/AboutTechPoov.html -->
-      <div id="about-view" style="display:none;">
-        <iframe
-          src="pages/AboutTechPoov.html"
-          title="About TechPoov"
-          style="
-            width: 100%;
-            height: calc(100vh - 160px);
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-            background: #ffffff;
-          "
-        ></iframe>
-      </div>
-
-      <div id="contact-view" style="display:none;">
-        <h1>Contact</h1>
-        <p>Email: <a href="mailto:techpoov+support@gmail.com">techpoov+support@gmail.com</a></p>
-      </div>
-
-    </main>
+      <!-- HOME CONTENT -->
+      <main class="content">
+        <div class="card">
+          <h2>Available Tools</h2>
+          <div id="home-tool-cards" class="tool-card-grid">
+            <!-- cards injected here -->
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="js/sidebar-tools.js"></script>
+<script>
+  // ----- Load header & sidebar -----
+  function loadPartial(id, url, onLoaded) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    fetch(url)
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load ' + url);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = html;
+        if (typeof onLoaded === 'function') onLoaded();
+      })
+      .catch(err => console.error(err));
+  }
 
-  <script>
-    function showOnly(viewId) {
-      const views = ["home-view", "readme-view", "about-view", "contact-view"];
-      views.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.style.display = (id === viewId) ? "block" : "none";
+  document.addEventListener('DOMContentLoaded', function () {
+    loadPartial('tp-header-container', 'partials/header.html');
+
+    loadPartial('sidebar-container', 'partials/sidebar.html', () => {
+      // highlight HOME
+      const page = document.body.dataset.page || 'home';
+      const selector = '.sidebar-nav .nav-link[data-page="' + page + '"]';
+      const active = document.querySelector(selector);
+      if (active) active.classList.add('active');
+
+      // Fill TOOLS list in sidebar using shared helper
+      tpInitSidebarTools({
+        configUrl: 'data/tools-index.txt',      // from root
+        basePath: 'pages/tool-readme.html',     // README page
+        currentTool: null
       });
-    }
-
-    function showHome() {
-      showOnly("home-view");
-    }
-
-    function showAbout() {
-      showOnly("about-view");
-    }
-
-    function showContact() {
-      showOnly("contact-view");
-    }
-
-    // Highlight active sidebar item
-    function setActiveSidebarItem(clickedItem) {
-      document.querySelectorAll("#sidebar a").forEach(a => {
-        a.classList.remove("active");
-      });
-      if (clickedItem) {
-        clickedItem.classList.add("active");
-      }
-    }
-
-    function loadREADME(repoPath, branchName = "main") {
-      showOnly("readme-view");
-      const readmeDiv = document.getElementById("readme-view");
-      readmeDiv.innerHTML = "<p>Loading README.md from GitHub…</p>";
-
-      const rawURL = `https://raw.githubusercontent.com/${repoPath}/${branchName}/README.md`;
-
-      fetch(rawURL)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("GitHub returned " + response.status);
-          }
-          return response.text();
-        })
-        .then(md => {
-          readmeDiv.innerHTML = marked.parse(md);
-        })
-        .catch(err => {
-          console.error(err);
-          readmeDiv.innerHTML =
-            "<p>Unable to load README.md. Please check repository / branch name.</p>";
-        });
-    }
-
-    const GITHUB_USER = "TechPoov";
-    // Map repo full_name -> sidebar <a> element
-    const sidebarLinkMap = {};
-
-    function getPrefixNumber(name) {
-      const m = name.match(/^(\d+)_/);
-      return m ? parseInt(m[1], 10) : null;
-    }
-
-    function cleanRepoName(name) {
-      return name.replace(/^\d+_/, "");
-    }
-
-    function buildCards(toolRepos) {
-      const container = document.getElementById("cards-container");
-      if (!container) return;
-
-      container.innerHTML = "";
-
-      toolRepos.forEach(repo => {
-        const card = document.createElement("div");
-        card.className = "tool-card";
-
-        const title = document.createElement("div");
-        title.className = "tool-title";
-        title.textContent = cleanRepoName(repo.name);
-
-        const desc = document.createElement("div");
-        desc.className = "tool-desc";
-        desc.textContent = repo.description || "No description provided yet.";
-
-        const badge = document.createElement("a");
-          badge.className = "download-badge";
-          badge.href = `https://github.com/${repo.full_name}/releases`;
-          badge.target = "_blank";
-          badge.innerHTML = `
-          <span class="label">downloads</span>
-          <span class="count">–</span>
-        `;
-        const countSpan = badge.querySelector(".count");
-        fetchDownloadCount(repo.full_name, countSpan);
-
-        const link = document.createElement("a");
-        link.className = "tool-link";
-        link.href = "#";
-        link.textContent = "README";
-
-        // Shared behavior for card + button
-        const openTool = () => {
-          const sidebarItem = sidebarLinkMap[repo.full_name];
-          if (sidebarItem) {
-            setActiveSidebarItem(sidebarItem);
-          }
-          loadREADME(repo.full_name, repo.default_branch);
-        };
-
-        // Click entire card
-        card.onclick = () => {
-          openTool();
-        };
-
-        // Click README button (prevent double triggering card)
-        link.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          openTool();
-        };
-
-        const footer = document.createElement("div");
-        footer.className = "tool-footer";
-        footer.appendChild(link);
-        footer.appendChild(badge);
-
-        card.appendChild(title);
-        card.appendChild(desc);
-        card.appendChild(footer);
-
-        container.appendChild(card);
-      });
-    }
-
-    async function fetchDownloadCount(fullName, spanEl) {
-      try {
-        const resp = await fetch(`https://api.github.com/repos/${fullName}/releases?per_page=10`);
-        if (!resp.ok) {
-          throw new Error("GitHub releases API error " + resp.status);
-        }
-        const releases = await resp.json();
-
-        let total = 0;
-        releases.forEach(rel => {
-          if (Array.isArray(rel.assets)) {
-            rel.assets.forEach(asset => {
-              if (typeof asset.download_count === "number") {
-                total += asset.download_count;
-              }
-            });
-          }
-        });
-
-        spanEl.textContent = total.toString();
-      } catch (err) {
-        console.error(err);
-        spanEl.textContent = "?";
-      }
-    }
-
-    async function buildToolsList() {
-      const list = document.getElementById("tools-list");
-      list.innerHTML = '<div style="font-size:13px;color:#6b7280;">Loading tools…</div>';
-
-      try {
-        const resp = await fetch(
-          `https://api.github.com/users/${GITHUB_USER}/repos?per_page=100`
-        );
-        if (!resp.ok) {
-          throw new Error("GitHub API error " + resp.status);
-        }
-        const repos = await resp.json();
-
-        const lowerPagesName = `${GITHUB_USER.toLowerCase()}.github.io`;
-
-        const toolRepos = repos.filter(r => {
-          const prefix = getPrefixNumber(r.name);
-          const isHidden = prefix === 99;
-          const isPages = r.name.toLowerCase() === lowerPagesName;
-          return !r.fork && !r.archived && !isPages && !isHidden;
-        });
-
-        toolRepos.sort((a, b) => {
-          const na = getPrefixNumber(a.name);
-          const nb = getPrefixNumber(b.name);
-
-          if (na !== null && nb !== null) {
-            return na - nb;
-          }
-          if (na !== null) return -1;
-          if (nb !== null) return 1;
-          return a.name.localeCompare(b.name);
-        });
-
-        list.innerHTML = "";
-        toolRepos.forEach(repo => {
-          const a = document.createElement("a");
-          a.href = "#";
-          a.textContent = cleanRepoName(repo.name);
-          a.classList.add("submenu-item");
-
-          // store mapping so cards can find this sidebar item
-          sidebarLinkMap[repo.full_name] = a;
-
-          a.onclick = (e) => {
-            e.preventDefault();
-            setActiveSidebarItem(a);
-            loadREADME(repo.full_name, repo.default_branch);
-          };
-          list.appendChild(a);
-        });
-
-        if (toolRepos.length === 0) {
-          list.innerHTML =
-            '<div style="font-size:13px;color:#6b7280;">No tools found yet.</div>';
-        }
-
-        buildCards(toolRepos);
-
-      } catch (err) {
-        console.error(err);
-        list.innerHTML =
-          '<div style="font-size:13px;color:#b91c1c;">Error loading tools list.</div>';
-      }
-    }
-
-    function toggleTools() {
-      const list = document.getElementById("tools-list");
-      const arrow = document.getElementById("tools-arrow");
-      const currentlyHidden = list.style.display === "none";
-      list.style.display = currentlyHidden ? "block" : "none";
-      arrow.textContent = currentlyHidden ? "▾" : "▸";
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      showHome();
-      buildToolsList();
-      document.getElementById("tools-list").style.display = "block";
-
-      // Set Home as the initial active item
-      const homeLink = document.getElementById("nav-home");
-      setActiveSidebarItem(homeLink);
     });
-  </script>
+
+    initHomeDashboard();
+  });
+
+  // ----- Config & helpers -----
+
+  const HOME_CONFIG_URL = 'data/tools-index.txt';
+
+  function createLink(url, label) {
+    if (!url) return '';
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  }
+
+  // ----- GitHub download count -----
+
+  async function fetchTotalDownloads(repoSlug) {
+    const url = `https://api.github.com/repos/${repoSlug}/releases`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.warn('GitHub API failed for', repoSlug, response.status);
+      return null;
+    }
+
+    const releases = await response.json();
+    let total = 0;
+
+    releases.forEach(rel => {
+      if (Array.isArray(rel.assets)) {
+        rel.assets.forEach(asset => {
+          if (typeof asset.download_count === 'number') {
+            total += asset.download_count;
+          }
+        });
+      }
+    });
+
+    return total;
+  }
+
+  async function updateAllBadges() {
+    const badges = document.querySelectorAll('.download-badge[data-repo]');
+    for (const badge of badges) {
+      const repo = badge.getAttribute('data-repo');
+      const valueSpan = badge.querySelector('.download-badge-value');
+      const count = await fetchTotalDownloads(repo);
+      valueSpan.textContent = count ?? '–';
+    }
+  }
+
+  // ----- Home dashboard renderer -----
+function renderHomeCards(items) {
+  const container = document.getElementById('home-tool-cards');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // From index.html we need to go to /pages/tool-readme.html
+  const basePath = 'pages/tool-readme.html';
+
+  items.forEach(item => {
+    const rawName = item.ToolName || item.Section || '';
+    const displayName = tpGetDisplayName(rawName);   // using shared helper
+    const description = item.Description || item.Purpose || '';
+
+    const downloadLink = createLink(item.DownloadURL, 'Download');
+    const featureLink = createLink(item.FeatureComparisonURL, 'Feature Comparison');
+
+    const links = [downloadLink, featureLink]
+      .filter(Boolean)
+      .join(' | ');
+
+    const repoSlug = `TechPoov/${rawName}`;
+
+    const card = document.createElement('div');
+    card.className = 'tool-card';
+    card.innerHTML = `
+      <h3>${displayName}</h3>
+      <p>${description}</p>
+      <div class="download-badge" data-repo="${repoSlug}">
+        <span class="download-badge-label">downloads</span>
+        <span class="download-badge-value">–</span>
+      </div>
+      <div class="tool-card-links">
+        ${links}
+      </div>
+    `;
+
+    // 🔹 On card click: go to that tool's README (inside our layout)
+    card.addEventListener('click', (e) => {
+      // If user actually clicked a link (Download / Feature Comparison),
+      // let that link work normally and do NOT navigate to README.
+      if (e.target.tagName === 'A') return;
+
+      const url = `${basePath}?tool=${encodeURIComponent(rawName)}`;
+      window.location.href = url;
+    });
+
+    container.appendChild(card);
+  });
+}
+
+
+
+  function renderHomeCards_2b_Deleted(items) {
+    const container = document.getElementById('home-tool-cards');
+    if (!container) return;
+    container.innerHTML = '';
+
+    items.forEach(item => {
+      const rawName = item.ToolName || item.Section || '';
+      const displayName = tpGetDisplayName(rawName);          // shared helper
+      const description = item.Description || item.Purpose || '';
+
+      const downloadLink = createLink(item.DownloadURL, 'Download');
+      const featureLink = createLink(item.FeatureComparisonURL, 'Feature Comparison');
+
+      const links = [downloadLink, featureLink]
+        .filter(Boolean)
+        .join(' | ');
+
+      const repoSlug = `TechPoov/${rawName}`;
+
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.innerHTML = `
+        <h3>${displayName}</h3>
+        <p>${description}</p>
+        <div class="download-badge" data-repo="${repoSlug}">
+          <span class="download-badge-label">downloads</span>
+          <span class="download-badge-value">–</span>
+        </div>
+        <div class="tool-card-links">
+          ${links}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function initHomeDashboard() {
+    fetch(HOME_CONFIG_URL)
+      .then(r => {
+        if (!r.ok) {
+          throw new Error('HTTP ' + r.status + ' when fetching ' + HOME_CONFIG_URL);
+        }
+        return r.text();
+      })
+      .then(text => {
+        const items = tpParseToolsConfig(text);    // shared parser
+        renderHomeCards(items);
+        return updateAllBadges();
+      })
+      .catch(err => {
+        console.error('Home dashboard error:', err);
+      });
+  }
+</script>
 
 </body>
 </html>

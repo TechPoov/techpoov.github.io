@@ -3,86 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <title>About TechPoov</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Shared site layout -->
+  <link rel="stylesheet" href="../css/site.css">
+
+  <!-- About page specific tweaks -->
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      padding: 20px 28px;
-      background-color: #ffffff;
-      color: #333;
-      line-height: 1.6;
-      font-size: 16px;
-    }
-
-    h1 {
-      font-size: 28px;
+    .about-card h1 {
+      margin-top: 0;
+      font-size: 24px;
       color: #111827;
-      margin-bottom: 16px;
     }
-
-    p {
-      margin-bottom: 14px;
+    .about-card p {
+      margin-bottom: 12px;
+      line-height: 1.6;
     }
-
-    ul {
-      margin-top: 10px;
-      padding-left: 22px;
+    .about-card ul {
+      margin-top: 8px;
+      padding-left: 20px;
     }
-
-    li {
-      margin-bottom: 10px;
+    .about-card li {
+      margin-bottom: 8px;
     }
-
-    strong {
+    .about-card strong {
       color: #1e40af;
     }
   </style>
 </head>
 
-<body>
+<body data-page="about">
+  <!-- HEADER (partial) -->
+  <div id="tp-header-container"></div>
 
-  <h1>About TechPoov</h1>
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <div class="layout">
 
-  <p>
-    TechPoov is an engineering-driven initiative built on more than
-    <strong>25 years of real-world IT experience</strong> across multiple countries,
-    industries, and technology stacks.
-  </p>
+      <!-- SIDEBAR (partial) -->
+      <div id="sidebar-container"></div>
 
-  <p>
-    The mission is simple:
-    <strong>create small, reliable tools that solve the everyday problems people face.</strong>
-    No heavy software. No complicated setup. Just practical utilities that remove friction
-    from your digital life.
-  </p>
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="card about-card">
+          <h1>About TechPoov</h1>
 
-  <p>
-    TechPoov tools focus on addressing common challenges in:
-  </p>
+          <p>
+            TechPoov is an engineering-driven initiative built on more than
+            <strong>25 years of real-world IT experience</strong> across multiple countries,
+            industries, and technology stacks.
+          </p>
 
-  <ul>
-    <li>Google Drive organization and deep-folder analysis</li>
-    <li>Backup and replication workflows</li>
-    <li>Windows filesystem scanning and reporting</li>
-    <li>Metadata extraction and compliance support</li>
-    <li>Automation for repetitive, error-prone tasks</li>
-  </ul>
+          <p>
+            The mission is simple:
+            <strong>create small, reliable tools that solve the everyday problems people face.</strong>
+            No heavy software. No complicated setup. Just practical utilities that remove friction
+            from your digital life.
+          </p>
 
-  <p>
-    Every tool is designed around three core principles:
-  </p>
+          <p>
+            TechPoov tools focus on addressing common challenges in:
+          </p>
 
-  <ul>
-    <li><strong>Simplicity:</strong> Minimal configuration, no installation, intuitive output.</li>
-    <li><strong>Reliability:</strong> Handles large datasets, resumes safely, produces clean results.</li>
-    <li><strong>Practical Value:</strong> Inspired directly by everyday IT pain points.</li>
-  </ul>
+          <ul>
+            <li>Google Drive organization and deep-folder analysis</li>
+            <li>Backup and replication workflows</li>
+            <li>Windows filesystem scanning and reporting</li>
+            <li>Metadata extraction and compliance support</li>
+            <li>Automation for repetitive, error-prone tasks</li>
+          </ul>
 
-  <p>
-    TechPoov continues to grow, but the philosophy remains the same:
-    <strong>build tools that save time, reduce stress, and bring clarity to complex digital environments.</strong>
-  </p>
+          <p>
+            Every tool is designed around three core principles:
+          </p>
 
+          <ul>
+            <li><strong>Simplicity:</strong> Minimal configuration, no installation, intuitive output.</li>
+            <li><strong>Reliability:</strong> Handles large datasets, resumes safely, produces clean results.</li>
+            <li><strong>Practical Value:</strong> Inspired directly by everyday IT pain points.</li>
+          </ul>
+
+          <p>
+            TechPoov continues to grow, but the philosophy remains the same:
+            <strong>build tools that save time, reduce stress, and bring clarity to complex digital environments.</strong>
+          </p>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Shared sidebar tools logic -->
+  <script src="../js/sidebar-tools.js"></script>
+
+  <script>
+    // Reuse the same partial loader pattern
+    function loadPartial(id, url, onLoaded) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      fetch(url)
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load ' + url);
+          return r.text();
+        })
+        .then(html => {
+          el.innerHTML = html;
+          if (typeof onLoaded === 'function') onLoaded();
+        })
+        .catch(err => console.error(err));
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Header
+      loadPartial('tp-header-container', '../partials/header.html');
+
+      // Sidebar + TOOLS submenu
+      loadPartial('sidebar-container', '../partials/sidebar.html', () => {
+        // Highlight INFO > About TechPoov
+        const page = document.body.dataset.page || 'about';
+        const selector = '.sidebar-nav .nav-link[data-page="' + page + '"]';
+        const active = document.querySelector(selector);
+        if (active) active.classList.add('active');
+
+        // IMPORTANT: from /pages/, paths are different
+        tpInitSidebarTools({
+          configUrl: '../data/tools-index.txt',  // up one level
+          basePath: 'tool-readme.html',          // in /pages/
+          currentTool: null
+        });
+      });
+    });
+  </script>
 </body>
 </html>

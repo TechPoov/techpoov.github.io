@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TechPoov Tools – Tool Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="../css/site.css">
+
+  <style>
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    #tool-readme {
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    #tool-readme h1,
+    #tool-readme h2,
+    #tool-readme h3 {
+      margin-top: 1.2em;
+      margin-bottom: 0.4em;
+    }
+
+    #tool-readme p {
+      margin: 0.4em 0 0.6em;
+    }
+
+    #tool-readme ul,
+    #tool-readme ol {
+      padding-left: 1.4em;
+    }
+  </style>
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body data-page="tool-details">
+  <!-- HEADER -->
+  <div id="tp-header-container"></div>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+      <div id="sidebar-container"></div>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="card">
+          <!-- Removed the <h2 id="tool-title"> line -->
+          <div id="tool-readme">Loading README…</div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <script src="../js/sidebar-tools.js"></script>
+
+  <script>
+    function loadPartial(id, url, onLoaded) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      fetch(url)
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load ' + url);
+          return r.text();
+        })
+        .then(html => {
+          el.innerHTML = html;
+          if (typeof onLoaded === 'function') onLoaded();
+        })
+        .catch(err => console.error(err));
+    }
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    async function loadReadme() {
+      const tool = getQueryParam('tool');   // e.g. 01_GDrive-to-GSheet
+      const readmeDiv = document.getElementById('tool-readme');
+
+      if (!tool) {
+        readmeDiv.textContent = 'No tool specified.';
+        return;
+      }
+
+      // Use your shared helper to get a nice display name
+      const displayName = tpGetDisplayName(tool);
+
+      // Update browser tab title instead of adding a heading in the content
+      document.title = 'TechPoov Tools – ' + displayName;
+
+      const rawUrl =
+        `https://raw.githubusercontent.com/TechPoov/${tool}/main/README.md`;
+
+      try {
+        const resp = await fetch(rawUrl);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const markdown = await resp.text();
+        const html = marked.parse(markdown);
+        readmeDiv.innerHTML = html;
+      } catch (err) {
+        console.error('README load error:', err);
+        readmeDiv.textContent =
+          'Unable to load README from ' + rawUrl +
+          '. Please check the repository or try again later.';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const currentTool = getQueryParam('tool');
+
+      loadPartial('tp-header-container', '../partials/header.html');
+
+      loadPartial('sidebar-container', '../partials/sidebar.html', () => {
+        // Fill TOOLS list and highlight current tool
+        tpInitSidebarTools({
+          configUrl: '../data/tools-index.txt',
+          basePath: 'tool-readme.html',
+          currentTool: currentTool
+        });
+      });
+
+      loadReadme();
+    });
+  </script>
+</body>
+</html>

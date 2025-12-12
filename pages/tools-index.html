@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TechPoov Tools — Tool Index Dashboard</title>
+
+  <!-- Shared layout styles -->
+  <link rel="stylesheet" href="../css/site.css">
+
+  <!-- Page-specific styles (table, etc.) -->
+  <style>
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2d6cdf;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: center;
+      background: #eef3ff;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9fbff;
+    }
+
+    th:first-child,
+    td:first-child {
+      width: 60px;
+      text-align: center;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 18%;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+      width: 28%;
+    }
+
+    td {
+      word-wrap: break-word;
+    }
+
+    a {
+      color: #2d6cdf;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body data-page="dashboard">
+  <!-- HEADER -->
+  <div id="tp-header-container"></div>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+      <div id="sidebar-container"></div>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <h1>Tool Index Dashboard</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Tool Name</th>
+              <th>Purpose + Downloads</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody id="tool-table-body">
+            <!-- rows injected from ../data/tools-index.txt -->
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/sidebar-tools.js"></script>
+<script>
+  // (this script replaces whatever JS you currently have in this file)
+  const CONFIG_URL = '../data/tools-index.txt';
+
+  function createLink(url, label) {
+    if (!url) return '';
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  }
+
+  // GitHub downloads (same logic as home)
+  async function fetchTotalDownloads(repoSlug) {
+    const url = `https://api.github.com/repos/${repoSlug}/releases`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.warn('GitHub API failed for', repoSlug, response.status);
+      return null;
+    }
+    const releases = await response.json();
+    let total = 0;
+    releases.forEach(rel => {
+      if (Array.isArray(rel.assets)) {
+        rel.assets.forEach(asset => {
+          if (typeof asset.download_count === 'number') {
+            total += asset.download_count;
+          }
+        });
+      }
+    });
+    return total;
+  }
+
+  async function updateAllBadges() {
+    const badges = document.querySelectorAll('.download-badge[data-repo]');
+    for (const badge of badges) {
+      const repo = badge.getAttribute('data-repo');
+      const valueSpan = badge.querySelector('.download-badge-value');
+      const count = await fetchTotalDownloads(repo);
+      valueSpan.textContent = count ?? '–';
+    }
+  }
+
+  function renderTable(items) {
+    const tbody = document.getElementById('tool-table-body');
+    tbody.innerHTML = '';
+
+    items.forEach((item, index) => {
+      const rawName = item.ToolName || item.Section || '';
+      const displayName = tpGetDisplayName(rawName);
+      const purpose = item.Purpose || '';
+
+      const downloadLink = createLink(item.DownloadURL, 'Download');
+      const manualLink = createLink(item.UserManualURL, 'User Manual');
+      const featureLink = createLink(item.FeatureComparisonURL, 'Feature Comparison');
+      const testCasesLink = createLink(item.TestCasesURL, 'Test Cases');
+
+      const links = [downloadLink, manualLink, featureLink, testCasesLink]
+        .filter(Boolean)
+        .join(' | ');
+
+      const repoSlug = `TechPoov/${rawName}`;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${displayName}</td>
+        <td>
+          ${purpose}
+          <span class="download-badge inline" data-repo="${repoSlug}">
+            <span class="download-badge-label">downloads</span>
+            <span class="download-badge-value">–</span>
+          </span>
+        </td>
+        <td>${links}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function loadToolIndex() {
+    fetch(CONFIG_URL)
+      .then(resp => {
+        if (!resp.ok) {
+          throw new Error('HTTP ' + resp.status + ' when fetching ' + CONFIG_URL);
+        }
+        return resp.text();
+      })
+      .then(text => {
+        const items = tpParseToolsConfig(text);
+        renderTable(items);
+        return updateAllBadges();
+      })
+      .catch(err => {
+        console.error('Tool index error:', err);
+        const tbody = document.getElementById('tool-table-body');
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4">
+              Error loading tool index data: ${err.message}
+            </td>
+          </tr>
+        `;
+      });
+  }
+
+  // partials + sidebar init
+  function loadPartial(id, url, onLoaded) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    fetch(url)
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to load ' + url);
+        return r.text();
+      })
+      .then(html => {
+        el.innerHTML = html;
+        if (typeof onLoaded === 'function') onLoaded();
+      })
+      .catch(err => console.error(err));
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    loadPartial('tp-header-container', '../partials/header.html');
+
+    loadPartial('sidebar-container', '../partials/sidebar.html', () => {
+      // highlight Dashboard
+      const page = document.body.dataset.page || 'dashboard';
+      const selector = '.sidebar-nav .nav-link[data-page="' + page + '"]';
+      const active = document.querySelector(selector);
+      if (active) active.classList.add('active');
+
+      // Fill TOOLS list using shared helper
+      tpInitSidebarTools({
+        configUrl: '../data/tools-index.txt',
+        basePath: 'tool-readme.html',
+        currentTool: null
+      });
+    });
+
+    loadToolIndex();
+  });
+</script>
+
+  
+</body>
+</html>

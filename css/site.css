@@ -1,0 +1,321 @@
+/* Shared layout for TechPoov pages that mimic index.html */
+
+/* === Sidebar section headings & groups === */
+
+
+/* Sidebar main headings (HOME link) */
+/* HOME main heading – match TOOLS + INFO exactly */
+#sidebar .nav-link-home {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  color: #1f2937 !important;
+
+  display: block;
+  margin-bottom: 18px;
+  padding-left: 0 !important;
+}
+
+
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Group wrapper (TOOLS, INFO groups) */
+.nav-section {
+  margin-top: 16px;
+}
+
+/* The small grey uppercase label: TOOLS, INFO */
+/* The small grey uppercase label: TOOLS, INFO */
+/* TOOLS / INFO headings (same style as HOME) */
+.nav-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1f2937;
+  padding-left: 0;
+  margin: 20px 0 12px;
+}
+
+
+
+/* Indent submenu items under TOOLS and INFO */
+.nav-section-items .nav-link,
+.nav-section-items .submenu-item {
+  padding-left: 20px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+
+/* Indent items under TOOLS / INFO a bit more */
+.nav-section-items .nav-link {
+  padding-left: 18px;
+}
+
+/* Base sidebar link */
+#sidebar a.nav-link {
+  display: block;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: #1f2933;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 400;
+}
+
+/* HOME at the top */
+/* HOME main heading style */
+#sidebar .nav-link-home {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1f2937;
+  margin-bottom: 18px;
+  padding-left: 0 !important;
+}
+
+#sidebar .nav-link-home .icon {
+  margin-right: 6px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+/* Active state highlight (used for Home, Dashboard, About) */
+#sidebar a.nav-link.active {
+  background-color: #e5edff;
+  color: #1e40af;
+  font-weight: 600;
+  border-left: 4px solid #2d6cdf;
+  padding-left: 12px;
+}
+
+/* Indentation for submenu items (TOOLS / INFO children) */
+#sidebar .submenu-item {
+  padding-left: 18px;
+}
+
+
+
+/* Base */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* HEADER – copied from index.html */
+header {
+  background: #2d6cdf;
+  padding: 20px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  letter-spacing: .5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;   /* ← This adds space between sidebar and content */
+}
+
+
+.left-block {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 48px;
+  width: auto;
+  margin-right: 14px;
+}
+
+.header-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.right-block {
+  font-size: 15px;
+  opacity: 0.9;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* LAYOUT UNDER HEADER: SIDEBAR + CONTENT */
+.main-wrapper {
+  max-width: none;
+  margin: 110px 30px 40px 30px;
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* SIDEBAR – same behavior as index.html */
+#sidebar {
+  width: 230px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  padding: 16px 14px;
+  box-sizing: border-box;
+}
+
+
+#sidebar h3 {
+  font-size: 14px;
+  margin: 14px 0 6px;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+#sidebar a {
+  display: block;
+  padding: 6px 4px;
+  font-size: 14px;
+  color: #1f2933;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 400; /* normal by default */
+}
+
+#sidebar a:hover {
+  background-color: #e5edff;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+#sidebar a.active {
+  background-color: #e5edff;
+  color: #1e40af;
+  font-weight: 600;
+  border-left: 4px solid #2d6cdf;
+  padding-left: 12px;
+}
+
+#sidebar .submenu-item {
+  padding-left: 18px;
+  display: block;
+}
+
+/* MAIN CONTENT AREA */
+#content {
+  box-sizing: border-box;
+  margin-left: 260px;
+}
+
+/* ==== HOME TOOL CARDS ==== */
+.tool-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.tool-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Hover state: light lift + blue border */
+.tool-card:hover {
+  border-color: #2563eb;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+/* Selected state (after click) – persistent blue border */
+.tool-card.tool-card-selected {
+  border-color: #2563eb;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+}
+
+
+.tool-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: #1d4ed8;
+}
+
+
+
+.tool-card p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.tool-card-links {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.tool-card-links a {
+  margin-right: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.tool-card-links a:hover {
+  text-decoration: underline;
+}
+
+/* ==== DOWNLOAD BADGE ==== */
+.download-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  overflow: hidden;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.download-badge-label {
+  background: #4b5563;
+  color: #ffffff;
+  padding: 6px 12px;
+  font-weight: 500;
+}
+
+.download-badge-value {
+  background: #fbbf24;
+  color: #111827;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+
+/* smaller version for table rows */
+.download-badge-small {
+  font-size: 11px;
+  margin-top: 4px;
+}
