@@ -1,6 +1,6 @@
 [GDrive-to-GSheet]
 ToolName=01_GDrive-to-GSheet
-Description=GDrive-to-GSheet is not just a scanner. Once data is in Sheets, users can add their own columns—tags, classifications, audit notes, migration status, ownership, or business context. Future scans refresh system data while preserving user intelligence, effectively turning Google Sheets into a personal document database for Google Drive.
+Description=Drive-to-GSheet is Smart Indexing & Data Retention - offers precision scanning, letting you index specific folders or sub-folders into a Google Sheet. It's smart enough to preserve your custom columns (like 'Comments' and 'Tags') across runs by migrating them to the new index sheet, ensuring you never lose your manual classification work. The previous run is archived as SheetName_OLD, and a detailed Log tracks the process for complete confidence. Audit, tag, and organize your Drive without losing your progress.
 Purpose=Scans Google Drive folders and generates structured GSheet inventory with metadata.
 DownloadURL=https://github.com/TechPoov/01_GDrive-to-Gsheet/releases/download/V1.0/GDrive-to-Gsheet_V1.0_zip.zip
 UserManualURL=https://docs.google.com/document/d/1yM20jOvYvxCeqIBKuDGzigvi9NLufmQLAMrJwFylpkA/edit?usp=sharing
@@ -11,25 +11,25 @@ TestCasesURL=https://docs.google.com/spreadsheets/d/1sOd-GVb3yurnIX46r9vYiHX3Nds
 ToolName=02_GDrive-FolderCopy
 Description=Google Drive lacks native folder copying, but the Drive Folder Duplicator solves it instantly. This powerful tool copies an entire folder structure—including all files and subfolders—intact to any new destination, be it a different folder, a Shared Drive, or a shared location. Configure multiple source folders in a simple Profile Sheet and run the process remotely. Move, migrate, and reorganize large sections of your Drive effortlessly and reliably.                                                                                                                                                                                                                                                           .
 Purpose=Copies Google Drive folders safely with audit-friendly structure handling.
-DownloadURL=https://github.com/TechPoov/02_Gdrive-FolderCopy/releases/download/V1.0/251104_GdriveFolderCopy_V1.0.zip
-UserManualURL=https://docs.google.com/document/d/1PdNsuZ_GIPac5KTKAA4F6KEvlfco9pCQfAsLotnuu9A/edit?tab=t.0#heading=h.gwpbu6e7pe3n
-FeatureComparisonURL=https://docs.google.com/spreadsheets/d/1iD3qhnseUmgmlPfYre0Z9xVB3wNuZe_z_irk_TuP73Y/edit?gid=0#gid=0
-TestCasesURL=https://docs.google.com/spreadsheets/d/1nKbSnOrZPNFgR2kuCPCXXKIjS4Tm8pd8fgmh6u2J1Ew/edit?gid=0#gid=0
+DownloadURL=...
+UserManualURL=...
+FeatureComparisonURL=...
+TestCasesURL=...
 
 [WinFS-InventoryCSV]
 ToolName=11_WinFS_InventoryCSV
 Description=The Frictionless Windows File System Auditor Stop struggling with bulky tools. WinFS-InventoryCSV is your silent, zero-installation solution for comprehensive Windows folder auditing. It rapidly scans any directory structure to generate clean, Excel-ready CSV reports containing all critical metadata—including paths, sizes, timestamps, and attributes—for files, folders, or both. Configure complex, multi-job scans entirely through a simple configuration file, ensuring it integrates perfectly with IT operations, documentation, and automated server workflows. Get the deep file system insights you need without the bloat, pop-ups, or dependencies.
 Purpose=Scans Windows folder structures and outputs clean CSV reports for inventory and audits.
-DownloadURL=https://github.com/TechPoov/11_WinFS_InventoryCSV/releases/download/V1.1/WinFS_Inventory_V1.1_With_Documents.zip
-UserManualURL=https://docs.google.com/document/d/1Wx5nXxQ5-YsJkGqS8HqB8gJcz2CM2bD39CwOof999cA/edit?tab=t.0#heading=h.4grgd2g8vxvo
-FeatureComparisonURL=https://docs.google.com/document/d/13VF-MkUIuKPWz3vAOc73kLmcOznKo1u7r4w_rqipDF0/edit?tab=t.0
-TestCasesURL=https://docs.google.com/spreadsheets/d/1KDR-f-XpTCEagURPngCUxc9mW1Rwu0xa0IT13I804Pg/edit?gid=0#gid=0
+DownloadURL=...
+UserManualURL=...
+FeatureComparisonURL=...
+TestCasesURL=...
 
 [WinFolder-SizeAnalyzer]
 ToolName=12_WinFolder_Size_Analyzer
 Description=WinFolder_Size_Analyzer is the lightweight utility for precise Windows storage analysis. Quickly scan large directories to generate clean CSV reports featuring aggregated folder sizes and file counts. Fine-tune your analysis with adjustable scan depth and mode (Files-only, Folders-only, or Both). Designed for automation, it runs silently, making it perfect for integration with Task Scheduler for regular, detailed storage audits and migration planning. Get accurate, actionable size metrics effortlessly.
 Purpose=Calculates folder sizes quickly and generates well-structured CSV output.
-DownloadURL=https://github.com/TechPoov/12_WinFolder_Size_Analyzer/releases/download/1.0/Folder_Size_Analyzer_V1.0.zip
-UserManualURL=https://docs.google.com/document/d/1gZcs_K-3kZaK6Epvx8G-e-jJJKzC0wJCt16G7aWlUb8/edit?tab=t.0
-FeatureComparisonURL=https://docs.google.com/spreadsheets/d/1JI7ySEy_1DngAzl3gBoqHpRygjzEydVxaLeg6UdpwhQ/edit?gid=0#gid=0
-TestCasesURL=https://docs.google.com/spreadsheets/d/1Km3BTzkHM5ycnRgYB_aL7IXAB1inN4QABwWl6JcPt0o/edit?gid=2038188892#gid=2038188892
+DownloadURL=...
+UserManualURL=...
+FeatureComparisonURL=...
+TestCasesURL=...
