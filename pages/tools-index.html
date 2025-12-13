@@ -107,7 +107,10 @@
     </div>
   </div>
 
-  <script src="../js/sidebar-tools.js"></script>
+    <!-- newly added 2025-12-13-->
+<script src="../js/site-config.js"></script>
+<script src="../js/sidebar-tools.js"></script>
+
 <script>
   // (this script replaces whatever JS you currently have in this file)
   const CONFIG_URL = '../data/tools-index.txt';
@@ -140,6 +143,9 @@
   }
 
   async function updateAllBadges() {
+      if (!SITE_CONFIG.SHOW_DOWNLOAD_COUNT) {
+    return Promise.resolve(); // ← graceful no-op
+  }
     const badges = document.querySelectorAll('.download-badge[data-repo]');
     for (const badge of badges) {
       const repo = badge.getAttribute('data-repo');
@@ -186,6 +192,14 @@
     });
   }
 
+function applyDownloadVisibility() {
+  if (SITE_CONFIG.SHOW_DOWNLOAD_COUNT) return;
+
+  document.querySelectorAll('.download-badge, .download-count')
+    .forEach(el => el.style.display = 'none');
+}
+
+
   function loadToolIndex() {
     fetch(CONFIG_URL)
       .then(resp => {
@@ -197,6 +211,7 @@
       .then(text => {
         const items = tpParseToolsConfig(text);
         renderTable(items);
+        applyDownloadVisibility();  
         return updateAllBadges();
       })
       .catch(err => {

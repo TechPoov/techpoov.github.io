@@ -8,8 +8,6 @@
   <!-- Shared layout styles -->
   <link rel="stylesheet" href="css/site.css">
 
-  <script src="js/sidebar-tools.js"></script>
-
   <!-- Page-specific styles -->
   <style>
     .card {
@@ -50,6 +48,8 @@
     </div>
   </div>
 
+    <!-- newly added 2025-12-13-->
+  <script src="../js/site-config.js"></script>
   <script src="js/sidebar-tools.js"></script>
 <script>
   // ----- Load header & sidebar -----
@@ -125,6 +125,9 @@
   }
 
   async function updateAllBadges() {
+      if (!SITE_CONFIG.SHOW_DOWNLOAD_COUNT) {
+    return Promise.resolve(); // ← graceful no-op
+  }
     const badges = document.querySelectorAll('.download-badge[data-repo]');
     for (const badge of badges) {
       const repo = badge.getAttribute('data-repo');
@@ -184,6 +187,12 @@ function renderHomeCards(items) {
     container.appendChild(card);
   });
 }
+function applyDownloadVisibility() {
+  if (SITE_CONFIG.SHOW_DOWNLOAD_COUNT) return;
+
+  document.querySelectorAll('.download-badge, .download-count')
+    .forEach(el => el.style.display = 'none');
+}
 
 
 
@@ -234,6 +243,7 @@ function renderHomeCards(items) {
       .then(text => {
         const items = tpParseToolsConfig(text);    // shared parser
         renderHomeCards(items);
+        applyDownloadVisibility(); 
         return updateAllBadges();
       })
       .catch(err => {
